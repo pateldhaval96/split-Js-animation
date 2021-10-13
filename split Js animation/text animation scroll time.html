@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/gsap-latest-beta.min.js?r=5426"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/ScrollTrigger.min.js"></script>
+  <script src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/16327/SplitText3.min.js"></script>
+  
+
+  <style type="text/css">
+ .wrap {
+  width: 100%;
+  height: auto;
+  max-width: 768px;
+  background-color: transparent;
+  margin: 0 auto;
+  padding: 20px;
+  padding-top: 60px;
+ }
+ .sp {
+  width: 100%;
+  height: 100vh;
+  background-color: teal;
+  margin: 0 auto;
+  text-align: center;
+  font-family: arial, helvetica;
+  font-size: 30px;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+ }
+ .quote {
+  margin-top: 0px;
+  font-family: 'Libre Baskerville', serif;
+  font-size: 60px;
+  color: #4f5664;
+  line-height: 76px;
+  text-align: center;
+  overflow: hidden;
+
+ }
+ .split-line {
+  overflow: hidden;
+ }
+  </style>
+</head>
+<body>
+
+
+  
+  
+
+
+<div class="wrap">
+  <h1 class="quote">Design is intelligence made&nbsp;visible.
+  </h1>   
+</div>
+  
+  <div class="wrap">
+  <div class="quote">Design is intelligence made&nbsp;visible.
+  </div>   
+</div>
+
+
+</body>
+</html>
+
+
+
+
+<script type="text/javascript">
+  const quotes = document.querySelectorAll(".quote");
+
+function setupSplits() {
+  quotes.forEach(quote => {
+    // Reset if needed
+    if(quote.anim) {
+      quote.anim.progress(1).kill();
+      quote.split.revert();
+    }
+
+    quote.split = new SplitText(quote, { 
+      type: "lines,words,chars",
+      linesClass: "split-line"
+    });
+
+    // Set up the anim
+    quote.anim = gsap.from(quote.split.chars, {
+      scrollTrigger: {
+        trigger: quote,
+        toggleActions: "restart pause resume reverse",
+        start: "top 50%",
+      },
+      duration: 0.6, 
+      ease: "circ.out", 
+      y: 80, 
+      stagger: 0.02,
+    });
+  });
+}
+
+ScrollTrigger.addEventListener("refresh", setupSplits);
+setupSplits();
+
+</script>
